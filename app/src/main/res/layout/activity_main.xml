@@ -234,7 +234,7 @@
                     android:layout_margin="16dp"
                     android:contentDescription="@string/microg_download_button_description"
                     android:enabled="false"
-                    android:onClick="downloadMicroG"
+                    android:onClick="downloadGmsCore"
                     android:text="@string/download_button_text" />
 
             </com.google.android.material.card.MaterialCardView>

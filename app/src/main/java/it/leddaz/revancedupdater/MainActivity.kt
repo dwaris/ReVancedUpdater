@@ -81,8 +81,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         DynamicColors.applyToActivityIfAvailable(this)
         setContentView(R.layout.activity_main)
-        val microGCardTitle = findViewById<MaterialTextView>(R.id.updater_title)
-        microGCardTitle.text = getString(R.string.app_name)
+        val updaterCardTitle = findViewById<MaterialTextView>(R.id.updater_title)
+        updaterCardTitle.text = getString(R.string.app_name)
         Log.i(LOG_TAG, "Device fingerprint: ${Build.FINGERPRINT}")
         refresh(this)
 
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         if (!IS_DEBUG)
             updaterCard.setOnLongClickListener {
                 openLink(
-                    "https://github.com/LeddaZ/ReVancedUpdater/releases/tag/${
+                    "https://github.com/dwaris/ReVancedUpdater/releases/tag/${
                         APP_VERSION.substring(
                             0,
                             APP_VERSION.indexOf(' ')
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         else
             updaterCard.setOnLongClickListener {
                 openLink(
-                    "https://github.com/LeddaZ/ReVancedUpdater/releases/tag/dev",
+                    "https://github.com/dwaris/ReVancedUpdater/releases/tag/dev",
                     this
                 )
                 true
@@ -191,8 +191,8 @@ class MainActivity : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val reVancedJSONUrl =
             "https://raw.githubusercontent.com/LeddaZ/revanced-repo/main/updater.json"
-        val updaterAPIUrl = "https://api.github.com/repos/LeddaZ/ReVancedUpdater/releases/latest"
-        val updaterCommitUrl = "https://api.github.com/repos/LeddaZ/ReVancedUpdater/commits/master"
+        val updaterAPIUrl = "https://api.github.com/repos/dwaris/ReVancedUpdater/releases/latest"
+        val updaterCommitUrl = "https://api.github.com/repos/dwaris/ReVancedUpdater/commits/main"
         val gmsCoreAPIUrl = "https://api.github.com/repos/ReVanced/GmsCore/releases/latest"
         var reVancedReply: ReVancedJSONObject
         var updaterReleaseReply: UpdaterReleaseJSONObject
@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity() {
             updaterReleaseReply =
                 Gson().fromJson(response, object : TypeToken<UpdaterReleaseJSONObject>() {}.type)
             latestUpdaterVersion = Version(updaterReleaseReply.latestUpdaterVersion)
-            updaterDownloadUrl = "https://github.com/LeddaZ/ReVancedUpdater/releases/download/" +
+            updaterDownloadUrl = "https://github.com/dwaris/ReVancedUpdater/releases/download/" +
                     latestUpdaterVersion + "/app-release.apk"
             callback.onSuccess()
         }, {})
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
                 Gson().fromJson(response, object : TypeToken<UpdaterDebugJSONObject>() {}.type)
             latestUpdaterCommit = updaterDebugReply.latestUpdaterCommit.substring(0, 7)
             updaterDownloadUrl =
-                "https://github.com/LeddaZ/ReVancedUpdater/releases/download/dev/app-debug-signed.apk"
+                "https://github.com/dwaris/ReVancedUpdater/releases/download/dev/app-debug-signed.apk"
             callback.onSuccess()
         }, {})
 
@@ -316,7 +316,7 @@ class MainActivity : AppCompatActivity() {
      * Downloads ReVanced GmsCore when the button is clicked.
      * @property view the view which contains the button.
      */
-    fun downloadMicroG(view: View) {
+    fun downloadGmsCore(view: View) {
         view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
         dlAndInstall("microg.apk", gmsCoreDownloadUrl, this)
     }
@@ -497,9 +497,9 @@ class MainActivity : AppCompatActivity() {
                 latestReVancedMusicTextView.text =
                     getString(R.string.latest_app_version, latestReVancedMusicVersion)
 
-                val latestMicroGTextView: TextView =
+                val latestGmsCoreTextView: TextView =
                     findViewById(R.id.latest_microg_version)
-                latestMicroGTextView.text =
+                latestGmsCoreTextView.text =
                     getString(R.string.latest_app_version, latestGmsCoreVersion)
 
                 val latestAppTextView: TextView = findViewById(R.id.latest_updater_version)

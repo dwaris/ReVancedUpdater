@@ -28,7 +28,7 @@ class AboutDialog : DialogFragment() {
                 .setPositiveButton(R.string.open_github) { _, _ ->
                     this.context?.let { it1 ->
                         openLink(
-                            "https://github.com/LeddaZ/ReVancedUpdater",
+                            "https://github.com/dwaris/ReVancedUpdater",
                             it1
                         )
                     }

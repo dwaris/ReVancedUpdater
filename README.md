@@ -3,11 +3,11 @@
 Updater for my ReVanced builds, you can find more
 info [here](https://github.com/LeddaZ/revanced-repo).
 
-### Download ![downloadCount](https://img.shields.io/github/downloads/LeddaZ/ReVancedUpdater/total?color=blue&label=Downloads)
+### Download ![downloadCount](https://img.shields.io/github/downloads/dwaris/ReVancedUpdater/total?color=blue&label=Downloads)
 
-#### [Latest release](https://github.com/LeddaZ/ReVancedUpdater/releases/latest)
+#### [Latest release](https://github.com/dwaris/ReVancedUpdater/releases/latest)
 
-#### [Latest development build](https://github.com/LeddaZ/ReVancedUpdater/releases/tag/dev)
+#### [Latest development build](https://github.com/dwaris/ReVancedUpdater/releases/tag/dev)
 
 ### Translations
 
