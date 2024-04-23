@@ -28,11 +28,5 @@ data class ReVancedJSONObject(
     val latestReVancedMusicHashX86: String,
 
     @SerializedName("latestReVancedMusicHashX86_64")
-    val latestReVancedMusicHashX64: String,
-
-    @SerializedName("latestXVersion")
-    val latestXVersion: String,
-
-    @SerializedName("latestXDate")
-    val latestXDate: String
+    val latestReVancedMusicHashX64: String
 )
