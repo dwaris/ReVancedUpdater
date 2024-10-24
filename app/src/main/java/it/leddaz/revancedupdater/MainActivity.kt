@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request.Method.GET
 import com.android.volley.toolbox.StringRequest
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
      * @property savedInstanceState
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         DynamicColors.applyToActivityIfAvailable(this)
         setContentView(R.layout.activity_main)
@@ -371,7 +373,7 @@ class MainActivity : AppCompatActivity() {
             } else if (packageName == GMSCORE_PACKAGE) {
                 if (isHmsInstalled(this) && !isGmsInstalled(this))
                     installedVersion.version =
-                        pInfo.versionName.substring(0, pInfo.versionName.length - 3)
+                        pInfo.versionName?.substring(0, pInfo.versionName!!.length - 3)
                 else
                     installedVersion.version = pInfo.versionName
                 installedTextView.text =
@@ -452,7 +454,7 @@ class MainActivity : AppCompatActivity() {
         button: Button
     ) {
         val pInfo: PackageInfo = packageManager.getPackageInfo(packageName, 0)
-        val file = File(pInfo.applicationInfo.sourceDir)
+        val file = pInfo.applicationInfo?.sourceDir?.let { File(it) }
         val installedAppHash = String(Hex.encodeHex(DigestUtils.sha256(FileInputStream(file))))
         if (installedAppHash == latestHash) {
             runOnUiThread {

@@ -9,7 +9,8 @@
     <string name="app_not_installed">היישום לא הותקן</string>
     <string name="download_error">An error occurred while downloading. Check logs for more details.</string>
     <string name="open_github">See on GitHub</string>
-    <string name="about_dialog_text">ReVanced Updater is an app made by LeddaZ to update his ReVanced builds.</string>
+    <string name="about_dialog_text">ReVanced Updater is an app made by LeddaZ to update his
+        ReVanced builds.</string>
     <string name="revanced_download_button_description">Download ReVanced</string>
     <string name="bottom_bar_refresh">רענן</string>
     <string name="none">ללא</string>
@@ -21,9 +22,9 @@
     <string name="yes">כן</string>
     <string name="no">לא</string>
     <string name="microg_dialog_title">ReVanced GmsCore not installed</string>
-    <string name="microg_dialog_text">ReVanced GmsCore is required to log in to your Google account on ReVanced apps. Do you want to install it now?</string>
+    <string name="microg_dialog_text">ReVanced GmsCore is required to log in to your Google account
+        on ReVanced apps. Do you want to install it now?</string>
     <string name="bottom_bar_about">אודות</string>
     <string name="about_dialog_title">About this app</string>
     <string name="download_button_text">הורד</string>
-    <string name="hold_app_card">Hold an app\'s card to open its changelog.</string>
 </resources>
