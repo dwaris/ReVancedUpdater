@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
+import android.provider.Settings
 import it.leddaz.revancedupdater.BuildConfig
 
 /**
@@ -33,7 +33,7 @@ object CommonStuff {
      */
     fun openLink(url: String, context: Context) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(context, browserIntent, null)
+        context.startActivity(browserIntent)
     }
 
     /**
@@ -44,7 +44,7 @@ object CommonStuff {
     fun isHmsInstalled(context: Context): Boolean {
         try {
             context.packageManager.getPackageInfo(HMS_PACKAGE, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             return false
         }
         return true
@@ -58,7 +58,7 @@ object CommonStuff {
     fun isGmsInstalled(context: Context): Boolean {
         try {
             context.packageManager.getPackageInfo(GMS_PACKAGE, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             return false
         }
         return true
@@ -72,10 +72,24 @@ object CommonStuff {
     fun isGmsCoreInstalled(context: Context): Boolean {
         try {
             context.packageManager.getPackageInfo(GMSCORE_PACKAGE, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             return false
         }
         return true
+    }
+
+    /**
+     * Prompts the user to grant the permission to install apps.
+     * @param context The activity's context
+     */
+    fun requestInstallPermission(context: Context) {
+        val packageManager = context.packageManager
+        if (!packageManager.canRequestPackageInstalls()) {
+            val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES)
+                .setData(Uri.parse("package:" + BuildConfig.APPLICATION_ID))
+            context.startActivity(intent)
+            return
+        }
     }
 
 }

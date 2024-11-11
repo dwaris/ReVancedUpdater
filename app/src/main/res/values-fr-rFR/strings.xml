@@ -5,8 +5,6 @@
     <string name="update_status">Recherche des mises à jour…</string>
     <string name="update_available">Mise à jour disponible !</string>
     <string name="no_update_available">Aucune mise à jour disponible</string>
-    <string name="download_started">Téléchargement démarré. Consultez les notifications pour plus de
-        détails.</string>
     <string name="app_not_installed">Application non installée</string>
     <string name="download_error">Une erreur est survenue lors du téléchargement. Vérifiez les logs
         pour plus de détails.</string>
@@ -30,4 +28,7 @@
     <string name="bottom_bar_about">A propos</string>
     <string name="about_dialog_title">A propos de cette application</string>
     <string name="download_button_text">Télécharger</string>
+    <string name="hold_app_card">Tenez la carte d\'une application pour ouvrir son journal des
+        modifications.</string>
+    <string name="downloading">Downloading</string>
 </resources>

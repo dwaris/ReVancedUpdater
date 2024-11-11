@@ -7,7 +7,6 @@
     <string name="update_status">Checking for updates…</string>
     <string name="update_available">Update available!</string>
     <string name="no_update_available">No update available</string>
-    <string name="download_started">Download started. Check the notifications for details.</string>
     <string name="app_not_installed">App not installed</string>
     <string name="download_error">An error occurred while downloading. Check logs for more details.</string>
     <string name="open_github">See on GitHub</string>
@@ -34,4 +33,5 @@
     <string name="ok" translatable="false">OK</string>
     <string name="download_button_text">Download</string>
     <string name="microg_info_title" translatable="false">ReVanced GmsCore</string>
+    <string name="downloading">Downloading</string>
 </resources>
