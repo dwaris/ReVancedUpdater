@@ -25,7 +25,7 @@
     <string name="about_dialog_title">حول هذا التطبيق</string>
     <string name="download_button_text">تحميل</string>
     <string name="hold_app_card">Hold an app\'s card to open its changelog.</string>
-    <string name="x_download_button_description">تحميل X</string>
+    <string name="download_button_description">تحميل X</string>
     <string name="disclaimer">LeddaZ is only responsible for ReVanced Updater, app issues are not under his control.</string>
     <string name="downloading">Downloading</string>
 </resources>

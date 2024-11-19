@@ -31,15 +31,13 @@ import it.leddaz.revancedupdater.utils.json.UpdaterReleaseJSONObject
 import it.leddaz.revancedupdater.utils.misc.AppInstaller
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.APP_VERSION
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.GMSCORE_PACKAGE
+import it.leddaz.revancedupdater.utils.misc.CommonStuff.GMS_PACKAGE
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.IS_DEBUG
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.LOG_TAG
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.MUSIC_PACKAGE
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.REVANCED_PACKAGE
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.UPDATER_PACKAGE
-import it.leddaz.revancedupdater.utils.misc.CommonStuff.X_PACKAGE
-import it.leddaz.revancedupdater.utils.misc.CommonStuff.isGmsCoreInstalled
-import it.leddaz.revancedupdater.utils.misc.CommonStuff.isGmsInstalled
-import it.leddaz.revancedupdater.utils.misc.CommonStuff.isHmsInstalled
+import it.leddaz.revancedupdater.utils.misc.CommonStuff.isAppInstalled
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.openLink
 import it.leddaz.revancedupdater.utils.misc.CommonStuff.requestInstallPermission
 import it.leddaz.revancedupdater.utils.misc.Version
@@ -73,13 +71,9 @@ class MainActivity : AppCompatActivity() {
     private var installedGmsCoreVersion = Version("99.99")
     private var latestGmsCoreVersion = Version("0.0")
     private var gmsCoreDownloadUrl = ""
-    private var installedXVersion = Version("99.99")
-    private var latestXVersion = Version("0.0")
-    private var xDownloadUrl = ""
     private lateinit var revancedIndicator: LinearProgressIndicator
     private lateinit var musicIndicator: LinearProgressIndicator
     private lateinit var gmsCoreIndicator: LinearProgressIndicator
-    private lateinit var xIndicator: LinearProgressIndicator
     private lateinit var updaterIndicator: LinearProgressIndicator
 
 
@@ -96,7 +90,6 @@ class MainActivity : AppCompatActivity() {
         revancedIndicator = findViewById(R.id.revanced_download_progress)
         musicIndicator = findViewById(R.id.music_download_progress)
         gmsCoreIndicator = findViewById(R.id.microg_download_progress)
-        xIndicator = findViewById(R.id.x_download_progress)
         updaterIndicator = findViewById(R.id.updater_download_progress)
 
         val updaterCardTitle = findViewById<MaterialTextView>(R.id.updater_title)
@@ -128,20 +121,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val xCard = findViewById<MaterialCardView>(R.id.x_info_card)
-        xCard.setOnLongClickListener {
-            openLink(
-                "https://github.com/LeddaZ/revanced-repo/blob/main/changelogs/x.md",
-                this
-            )
-            true
-        }
 
         val updaterCard = findViewById<MaterialCardView>(R.id.updater_info_card)
         if (!IS_DEBUG)
             updaterCard.setOnLongClickListener {
                 openLink(
-                    "https://github.com/LeddaZ/ReVancedUpdater/releases/tag/${
+                    "https://github.com/dwaris/ReVancedUpdater/releases/tag/${
                         APP_VERSION.substring(
                             0,
                             APP_VERSION.indexOf(' ')
@@ -154,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         else
             updaterCard.setOnLongClickListener {
                 openLink(
-                    "https://github.com/LeddaZ/ReVancedUpdater/releases/tag/dev",
+                    "https://github.com/dwaris/ReVancedUpdater/releases/tag/dev",
                     this
                 )
                 true
@@ -193,14 +178,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.microg_download_button)
         )
 
-        getAppVersion(
-            X_PACKAGE,
-            findViewById(R.id.installed_x_version),
-            installedXVersion,
-            findViewById(R.id.x_download_button)
-        )
-
-        if (isGmsCoreInstalled(this)) {
+        if (isAppInstalled(this, GMSCORE_PACKAGE)) {
             getAppVersion(
                 REVANCED_PACKAGE,
                 findViewById(R.id.installed_revanced_version),
@@ -227,8 +205,8 @@ class MainActivity : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val reVancedJSONUrl =
             "https://raw.githubusercontent.com/LeddaZ/revanced-repo/main/updater.json"
-        val updaterAPIUrl = "https://api.github.com/repos/LeddaZ/ReVancedUpdater/releases/latest"
-        val updaterCommitUrl = "https://api.github.com/repos/LeddaZ/ReVancedUpdater/commits/master"
+        val updaterAPIUrl = "https://api.github.com/repos/dwaris/ReVancedUpdater/releases/latest"
+        val updaterCommitUrl = "https://api.github.com/repos/dwaris/ReVancedUpdater/commits/main"
         val gmsCoreAPIUrl = "https://api.github.com/repos/ReVanced/GmsCore/releases/latest"
         var reVancedReply: ReVancedJSONObject
         var updaterReleaseReply: UpdaterReleaseJSONObject
@@ -255,8 +233,6 @@ class MainActivity : AppCompatActivity() {
             }
             musicDownloadUrl = urlPrefix + reVancedReply.latestReVancedMusicDate +
                     "-ytm/ytm-$preferredABI-signed.apk"
-            latestXVersion = Version(reVancedReply.latestXVersion)
-            xDownloadUrl = urlPrefix + reVancedReply.latestXDate + "-x/x-signed.apk"
             callback.onSuccess()
         }, {})
 
@@ -264,7 +240,7 @@ class MainActivity : AppCompatActivity() {
             updaterReleaseReply =
                 Gson().fromJson(response, object : TypeToken<UpdaterReleaseJSONObject>() {}.type)
             latestUpdaterVersion = Version(updaterReleaseReply.latestUpdaterVersion)
-            updaterDownloadUrl = "https://github.com/LeddaZ/ReVancedUpdater/releases/download/" +
+            updaterDownloadUrl = "https://github.com/dwaris/ReVancedUpdater/releases/download/" +
                     latestUpdaterVersion + "/app-release.apk"
             callback.onSuccess()
         }, {})
@@ -274,7 +250,7 @@ class MainActivity : AppCompatActivity() {
                 Gson().fromJson(response, object : TypeToken<UpdaterDebugJSONObject>() {}.type)
             latestUpdaterCommit = updaterDebugReply.latestUpdaterCommit.substring(0, 7)
             updaterDownloadUrl =
-                "https://github.com/LeddaZ/ReVancedUpdater/releases/download/dev/app-debug-signed.apk"
+                "https://github.com/dwaris/ReVancedUpdater/releases/download/dev/app-debug-signed.apk"
             callback.onSuccess()
         }, {})
 
@@ -282,10 +258,7 @@ class MainActivity : AppCompatActivity() {
             gmsCoreReply =
                 Gson().fromJson(response, object : TypeToken<GmsCoreJSONObject>() {}.type)
             latestGmsCoreVersion = Version(gmsCoreReply.latestGmsCoreVersion.substring(1))
-            gmsCoreDownloadUrl = if (isHmsInstalled(this) && !isGmsInstalled(this))
-                gmsCoreReply.assets[0].latestGmsCoreUrl
-            else
-                gmsCoreReply.assets[1].latestGmsCoreUrl
+            gmsCoreDownloadUrl = gmsCoreReply.assets.firstOrNull()?.latestGmsCoreUrl.toString()
             callback.onSuccess()
         }, {})
 
@@ -308,13 +281,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.microg_download_button)
         )
 
-        compareAppVersion(
-            X_PACKAGE, installedXVersion,
-            latestXVersion, findViewById(R.id.x_update_status),
-            findViewById(R.id.x_download_button)
-        )
-
-        if (isGmsCoreInstalled(this)) {
+        if (isAppInstalled(this, GMSCORE_PACKAGE)) {
             compareAppVersion(
                 REVANCED_PACKAGE, installedReVancedVersion,
                 latestReVancedVersion, findViewById(R.id.revanced_update_status),
@@ -385,17 +352,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Downloads ReVanced GmsCore when the button is clicked.
-     * @property view the view which contains the button.
-     */
-    fun downloadX(view: View) {
-        view.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
-        AppInstaller(
-            this, xDownloadUrl, "x.apk", xIndicator, findViewById(R.id.x_download_button)
-        )
-    }
-
-    /**
      * Downloads ReVanced Updater when the button is clicked.
      * @property view the view which contains the button.
      */
@@ -435,15 +391,7 @@ class MainActivity : AppCompatActivity() {
                         getString(R.string.installed_app_version, APP_VERSION)
                 }
             } else if (packageName == GMSCORE_PACKAGE) {
-                if (isHmsInstalled(this) && !isGmsInstalled(this))
-                    installedVersion.version =
-                        pInfo.versionName?.substring(0, pInfo.versionName!!.length - 3)
-                else
-                    installedVersion.version = pInfo.versionName
-                installedTextView.text =
-                    getString(R.string.installed_app_version, installedVersion.version)
-            } else if (packageName == X_PACKAGE) {
-                installedVersion.version = pInfo.versionName?.substringBefore('-')
+                installedVersion.version = pInfo.versionName
                 installedTextView.text =
                     getString(R.string.installed_app_version, installedVersion.version)
             } else {
@@ -492,7 +440,7 @@ class MainActivity : AppCompatActivity() {
                 updateStatusTextView.text = getString(R.string.update_available)
                 button.isEnabled = true
             } else if (installedVersion.compareTo(latestVersion) == 0) {
-                if (packageName != GMSCORE_PACKAGE && packageName != UPDATER_PACKAGE && packageName != X_PACKAGE) {
+                if (packageName != GMSCORE_PACKAGE && packageName != UPDATER_PACKAGE) {
                     var latestHash = getLatestReVancedHash()
                     if (packageName == MUSIC_PACKAGE)
                         latestHash = getLatestReVancedMusicHash()
@@ -572,11 +520,6 @@ class MainActivity : AppCompatActivity() {
                     findViewById(R.id.latest_microg_version)
                 latestGmsCoreTextView.text =
                     getString(R.string.latest_app_version, latestGmsCoreVersion)
-
-                val latestXTextView: TextView =
-                    findViewById(R.id.latest_x_version)
-                latestXTextView.text =
-                    getString(R.string.latest_app_version, latestXVersion)
 
                 val latestAppTextView: TextView = findViewById(R.id.latest_updater_version)
                 if (!IS_DEBUG)

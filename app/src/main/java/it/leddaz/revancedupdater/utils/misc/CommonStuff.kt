@@ -23,9 +23,7 @@ object CommonStuff {
     const val MUSIC_PACKAGE = "app.revanced.android.apps.youtube.music"
     const val GMSCORE_PACKAGE = "app.revanced.android.gms"
     const val UPDATER_PACKAGE = "it.leddaz.revancedupdater"
-    const val HMS_PACKAGE = "com.huawei.hwid"
     const val GMS_PACKAGE = "com.google.android.gms"
-    const val X_PACKAGE = "com.twitter.android"
 
     /**
      * Opens a link using the default browser.
@@ -38,41 +36,13 @@ object CommonStuff {
     }
 
     /**
-     * Detects if HMS Core is installed.
+     * Detects if an app is installed.
      * @param context The activity's context
-     * @return HMS Core installation status
+     * @return true if the app is installed, false otherwise
      */
-    fun isHmsInstalled(context: Context): Boolean {
+    fun isAppInstalled(context: Context, packageName: String): Boolean {
         try {
-            context.packageManager.getPackageInfo(HMS_PACKAGE, 0)
-        } catch (_: PackageManager.NameNotFoundException) {
-            return false
-        }
-        return true
-    }
-
-    /**
-     * Detects if GMS is installed.
-     * @param context The activity's context
-     * @return GMS installation status
-     */
-    fun isGmsInstalled(context: Context): Boolean {
-        try {
-            context.packageManager.getPackageInfo(GMS_PACKAGE, 0)
-        } catch (_: PackageManager.NameNotFoundException) {
-            return false
-        }
-        return true
-    }
-
-    /**
-     * Detects if ReVanced GmsCore is installed.
-     * @param context The activity's context
-     * @return ReVanced GmsCore installation status
-     */
-    fun isGmsCoreInstalled(context: Context): Boolean {
-        try {
-            context.packageManager.getPackageInfo(GMSCORE_PACKAGE, 0)
+            context.packageManager.getPackageInfo(packageName, 0)
         } catch (_: PackageManager.NameNotFoundException) {
             return false
         }

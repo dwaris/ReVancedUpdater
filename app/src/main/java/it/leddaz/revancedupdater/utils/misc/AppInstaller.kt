@@ -70,7 +70,13 @@ class AppInstaller() {
                     val progress = (total * 100 / fileLength).toInt()
 
                     withContext(Dispatchers.Main) {
-                        progressIndicator.progress = progress
+                        progressIndicator.setProgress(progress, true)
+                        button.text = buildString {
+                            append(getString(context, R.string.downloading))
+                            append(" ")
+                            append(progress)
+                            append("%")
+                        }
                     }
 
                     output.write(data, 0, count)
@@ -82,6 +88,7 @@ class AppInstaller() {
                 withContext(Dispatchers.Main) {
                     progressIndicator.visibility = View.GONE
                     button.text = getString(context, R.string.download_button_text)
+                    button.isEnabled = true
                     installApk(fileName, context)
                 }
             }

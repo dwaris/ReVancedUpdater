@@ -25,7 +25,7 @@
     <string name="about_dialog_title">Despre această aplicaţie</string>
     <string name="download_button_text">Descărcare</string>
     <string name="hold_app_card">Țineți apăsat pe cardul unei aplicații pentru a deschide modificările din actualizare.</string>
-    <string name="x_download_button_description">Download X</string>
+    <string name="download_button_description">Download X</string>
     <string name="disclaimer">LeddaZ is only responsible for ReVanced Updater, app issues are not under his control.</string>
     <string name="downloading">Downloading</string>
 </resources>
