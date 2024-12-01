@@ -441,8 +441,10 @@ class MainActivity : AppCompatActivity() {
                 button.isEnabled = true
             } else if (installedVersion.compareTo(latestVersion) == 0) {
                 if (packageName != GMSCORE_PACKAGE && packageName != UPDATER_PACKAGE) {
-                    var latestHash = getLatestReVancedHash()
-                    if (packageName == MUSIC_PACKAGE)
+                    var latestHash = ""
+                    if (packageName == REVANCED_PACKAGE)
+                        latestHash = getLatestReVancedHash()
+                    else if (packageName == MUSIC_PACKAGE)
                         latestHash = getLatestReVancedMusicHash()
                     thread {
                         compareHashes(latestHash, updateStatusTextView, packageName, button)
@@ -495,7 +497,6 @@ class MainActivity : AppCompatActivity() {
             "revanced-nonroot-signed.apk",
             "app-release.apk",
             "microg.apk",
-            "x.apk"
         )
         val appDataDir = context.getExternalFilesDir("/apks/").toString() + "/"
         for (apk in filenames) {

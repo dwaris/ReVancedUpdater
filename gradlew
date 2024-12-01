@@ -89,8 +89,8 @@ APP_BASE_NAME=${0##*/}
 APP_HOME=$( cd -P "${APP_HOME:-./}" > /dev/null && printf '%s
 ' "$PWD" ) || exit
 
-# Use the maximum available, or set MAFD != -1 to use that value.
-MAFD=maximum
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD=maximum
 
 warn () {
     echo "$*"
@@ -145,20 +145,20 @@ fi
 
 # Increase the maximum file descriptors if we can.
 if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
-    case $MAFD in #(
+    case $MAX_FD in #(
       max*)
         # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
         # shellcheck disable=SC2039,SC3045
-        MAFD=$( ulimit -H -n ) ||
+        MAX_FD=$( ulimit -H -n ) ||
             warn "Could not query maximum file descriptor limit"
     esac
-    case $MAFD in  #(
+    case $MAX_FD in  #(
       '' | soft) :;; #(
       *)
         # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
         # shellcheck disable=SC2039,SC3045
-        ulimit -n "$MAFD" ||
-            warn "Could not set maximum file descriptor limit to $MAFD"
+        ulimit -n "$MAX_FD" ||
+            warn "Could not set maximum file descriptor limit to $MAX_FD"
     esac
 fi
 
